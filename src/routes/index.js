@@ -1,7 +1,10 @@
 const { Router } = require('express');
-const router = Router();
-const { check, validationResult } = require('express-validator');
+const passport = require('passport');
+const { check } = require('express-validator');
 const auth = require("../controllers/auth");
+
+
+const router = Router();
 
 // auth users
 router.post('/auth/singin', [
@@ -32,4 +35,6 @@ router.post('/auth/med/singup', [
     check('email', "Email is required").isEmail(),
     check('password', 'Password is requried').isLength({ min: 8 })
 ], auth.medSingup);
+
+module.exports = router
 
