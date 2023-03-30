@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 var cors = require('cors');
 const routes = require('./src/routes/index');
 
-const port = process.env.APP_PORT | 4000
+const port = process.env.APP_PORT | 4000;
 const app = express();
 
 app.use(express.static('public'));
@@ -23,8 +23,10 @@ const start = async () => {
     try {
         // connect mongodb database
         mongoose.set("strictQuery", false);
-        await mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@cluster0.nfwfcgy.mongodb.net/${process.env.DATABASE_NAME}`)
+
+        await mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@cluster0.d0hmkxu.mongodb.net/${process.env.DATABASE_NAME}`)
         .then(() => console.log("DATABASE CONNECTED |> MONGODB"))
+        
         // start rest api
         app.listen(port, () => {
             console.log(`SERVER STARTED ${process.env.APP_DOMAIN} PORT: ${port}`);

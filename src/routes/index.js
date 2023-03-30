@@ -36,5 +36,8 @@ router.post('/auth/med/singup', [
     check('password', 'Password is requried').isLength({ min: 8 })
 ], auth.medSingup);
 
+// 
+
+
 module.exports = router
 

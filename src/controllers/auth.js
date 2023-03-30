@@ -111,7 +111,7 @@ class Auth {
             "uid" : user.id,
             "lastname" : user.lastname,
             "firstname" : user.firstnaem,
-            "token" :  "Bearer " + token
+            "token" : token
         })
     }
     userSingup = async (req, res) => {
