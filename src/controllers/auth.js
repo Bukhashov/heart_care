@@ -4,7 +4,7 @@ const { Hash, Compare } = require('../../utils/hash');
 const userModel = require('../models/user');
 const medModel = require('../models/med');
 
-const TOKEN_KEY = process.env.TOKEN_KEY
+const TOKEN_KEY = process.env.TOKEN_KEY;
 
 class Auth {
     medSingin = async (req, res) => {

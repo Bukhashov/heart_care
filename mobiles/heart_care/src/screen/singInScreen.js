@@ -1,36 +1,47 @@
-import { View, Text, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Dimensions} from "react-native"
 import { Input, Button } from '@rneui/themed';
-import { useState } from "react";
-import config from "../../config/config";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import config from '../../config/config';
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-const SinginScreen = ({navigation}) => {
+const SingInScreen = ({navigation}) => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    
+
     const onChangePassword = (pass) => {
         setPassword(pass);
     }
     const onChangeEmail = (mail) => {
         setEmail(mail);
     }
+
     const auth = async () => {
-        console.log("auth");
         try{
+            console.log(email);
+            console.log(password);
             await axios.post(`${config.API_URI}${config.API_VERSION}/auth/singin`, {
                 email: email,
                 password: password
-            }).then((data) => {
-                console.log(data)
+            }).then(async (response) => {
+                console.log(response);
+                AsyncStorage.setItem("token", response.data.token);
+                AsyncStorage.setItem("uid", response.data.uid);
+                AsyncStorage.setItem("lastname", response.data.lastname);
+                AsyncStorage.setItem("firstname", response.data.firstname);
+                AsyncStorage.setItem("email", email);
+
+                navigation.navigate("home")
             })
         }
         catch(e){
             setEmail("");
             setPassword("");
             console.log(e)
+            console.log("status err");
         }
     }
 
@@ -63,4 +74,4 @@ const SinginScreen = ({navigation}) => {
     )
 }
 
-export default SinginScreen;
+export default SingInScreen

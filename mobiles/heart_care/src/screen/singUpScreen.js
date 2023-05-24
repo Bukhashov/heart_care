@@ -1,17 +1,18 @@
-import { useState } from "react";
-import { View, Text, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Dimensions} from "react-native"
 import { Input, Button } from '@rneui/themed';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import config from "../../config/config";
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-const SingupScreen = ({navigation}) => {
+const SingUpScreen = ({navigation}) => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [lastname, setLastname] = useState("");
     const [firstname, setFirstname] = useState("");
-    
 
     const onChangeLastname = (val) => {
         setLastname(val);
@@ -26,7 +27,27 @@ const SingupScreen = ({navigation}) => {
         setPassword(val);
     }
 
-
+    const auth = async () => {
+        try{
+            await axios.post(`${config.API_URI}${config.API_VERSION}/auth/singup`, {
+                lastname: lastname,
+                firstname: firstname,
+                email: email,
+                password: password
+            }).then(async (response) => {
+                console.log(response);
+                if(response.status == 201){
+                    navigation.navigate("singin")
+                }
+            })
+        }catch(e){
+            console.log(e);
+            setEmail("");
+            setFirstname("");
+            setLastname("");
+            setPassword("");
+        }
+    }
 
     return (
         <View style={{ width: width, height: height, display: 'flex', justifyContent: 'center', alignItems: 'center',  }}>
@@ -71,4 +92,4 @@ const SingupScreen = ({navigation}) => {
     )
 }
 
-export default SingupScreen;
+export default SingUpScreen;

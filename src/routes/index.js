@@ -3,6 +3,7 @@ const passport = require('passport');
 const { check } = require('express-validator');
 const auth = require("../controllers/auth");
 
+const diseases = require('../controllers/diseases');
 
 const router = Router();
 
@@ -24,6 +25,7 @@ router.delete('/auth/user/:id', passport.authenticate('jwt', {session: false}), 
         "massage": "this endpoint test version"
     })
 })
+
 // auth med es
 router.post('/auth/med/singin', [
     check('email', "Email is required").isEmail(),
@@ -37,6 +39,9 @@ router.post('/auth/med/singup', [
 ], auth.medSingup);
 
 // 
+
+router.get('/diseses/all', diseases.getAll);
+router.get('/diseses/:id', diseases.getById);
 
 
 module.exports = router
