@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Dimensions, SafeAreaView, ScrollView, FlatList} from "react-native";
+import { View, Text, Dimensions, SafeAreaView, ScrollView, FlatList, TouchableOpacity} from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 import ActivityIndicatorComponent from '../components/activityIndicator';
 import config from '../../config/config';
@@ -10,7 +10,7 @@ import axios from 'axios';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-const MainScreen = () => {
+const MainScreen = ({navigation}) => {
     const [containers, setContainers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [filteredDataSource, setFilteredDataSource] = useState([]);
@@ -19,7 +19,7 @@ const MainScreen = () => {
 
     const featData = async () => {
         try {
-            await axios.get(`${config.API_URI}${config.API_VERSION}/medicines`).then((response) => {
+            await axios.get(`${config.API_URI}${config.API_VERSION}/diseses/all`).then((response) => {
                 setContainers(response.data);
                 setFilteredDataSource(response.data);
                 setIsLoading(false);
@@ -48,15 +48,15 @@ const MainScreen = () => {
         console.log('Id : ' + item._id + ' Title : ' + item.name);
     };
 
-    const ItemView = ({ item }) => {
-        return (
-            <Text style={{ padding: 10 }} onPress={() => getItem(item)}>
-                {item._id}
-                {'.'}
-                {item.name.toUpperCase()}
-            </Text>
-        );
-    };
+    // const ItemView = ({ item }) => {
+    //     return (
+    //         <Text style={{ padding: 10 }} onPress={() => getItem(item)}>
+    //             {item._id}
+    //             {'.'}
+    //             {item.name.toUpperCase()}
+    //         </Text>
+    //     );
+    // };
 
     const ItemSeparatorView = () => {
         return (
@@ -73,6 +73,7 @@ const MainScreen = () => {
 
     useFocusEffect(
         React.useCallback(()=> {
+            featData();
             // let t = Date.now();
             // setNowDate(t.toString);
         }, [])
@@ -93,12 +94,12 @@ const MainScreen = () => {
                 placeholder={'Search'}
             />
 
-            <FlatList
+            {/* <FlatList
                 data={filteredDataSource}
                 keyExtractor={(item, index) => index.toString()}
                 ItemSeparatorComponent={ItemSeparatorView}
                 renderItem={ItemView}
-            />
+            /> */}
             {
                 isLoading
                 ? ( 
@@ -113,14 +114,25 @@ const MainScreen = () => {
                             <View style={{ padding: 8 }}>
                                 {
                                     filteredDataSource.map((container)=> (
-                                        <ContainerConponent 
+                                        <TouchableOpacity
                                             key={container._id}
-                                            navigation={navigation}
-                                            id={container._id}
-                                            image={container.image}
-                                            title={container.name}
-                                            pharmachologicEffect={container.pharmachologicEffect}
-                                        />
+                                            onPress={() => {
+                                                navigation.navigate('disesesRead', {
+                                                    content: {
+                                                        id: container._id
+                                                    }
+                                                })
+                                            }}
+                                        >
+                                            <View style={{
+                                                width: width-50,
+                                                paddingHorizontal: 15,
+                                                paddingVertical: 25,
+                                            }}>
+                                                <Text style={{paddingVertical: 5, fontSize: 18}}>{container.name}</Text>
+                                                <Text numberOfLines={5}>{container.problems}</Text>
+                                            </View>
+                                        </TouchableOpacity>  
                                     ))
                                 }
                             </View>
@@ -132,28 +144,6 @@ const MainScreen = () => {
 
 
         </View>
-        
-        // <SafeAreaView>
-        //     <ScrollView horizontal={false} showsHorizontalScrollIndicator={true}>
-        //         <View style={{width: width, display: 'flex', flexDirection: 'row', justifyContent: 'center', }}>
-        //             <View style={{margin: 10, width: width-40, height: 180, borderRadius: 10, backgroundColor: "#E8EBEC"}}>
-                        
-        //                 <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', }}>
-        //                     <View style={{margin: 8}}><Text>Status</Text></View>
-        //                     <View style={{margin: 8, width: 45, height: 8, borderRadius: 8, backgroundColor: '#EE0E29'}}></View>
-        //                 </View>
-        //             </View>
-        //         </View>
-                
-        //         <View style={{width: width, display: 'flex', flexDirection: 'row', justifyContent: 'center', }}>
-        //             <View style={{margin: 10, width: width-40, height: 180, borderRadius: 10, backgroundColor: "#E8EBEC"}}>
-        //                 <Text>{NowDate}</Text>
-        //             </View>
-        //         </View>
-                
-
-        //     </ScrollView>
-        // </SafeAreaView>
     )
 }
 
