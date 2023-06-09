@@ -7,6 +7,7 @@ import AccountScreen from '../screen/accountScreen';
 import MapScreen from '../screen/mapScreen';
 import ExitScreen from '../screen/exitScreen';
 import DisesesNavigation from './disesesNavigation';
+import ContactsScreen from '../screen/contactsScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -26,10 +27,11 @@ const HomeNavigation = ({navigation}) => {
     )
 
     return (
-        <Drawer.Navigator initialRouteName='main'>
-            <Drawer.Screen name="main" component={DisesesNavigation} />
-            <Drawer.Screen name="account" component={AccountScreen} />
-            <Drawer.Screen name="map" component={MapScreen} />
+        <Drawer.Navigator initialRouteName='Басты бет'>
+            <Drawer.Screen name="Басты бет" component={DisesesNavigation} />
+            <Drawer.Screen name="Профиль" component={AccountScreen} />
+            <Drawer.Screen name="Байланыс" component={ContactsScreen} />
+            <Drawer.Screen name="Карта" component={MapScreen} />
             <Drawer.Screen name="exit" component={ExitScreen} />
         </Drawer.Navigator>
     )

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Dimensions, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
+import { View, Text, Image, Dimensions, SafeAreaView, ScrollView, TouchableOpacity} from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 import ActivityIndicatorComponent from '../components/activityIndicator';
 import ContentContainer from '../components/content';
@@ -46,6 +46,7 @@ const DisesesReadScreen = (props) => {
                             horizontal={false}
                             showsHorizontalScrollIndicator={true}
                         >
+                             <Image style={{ width: width, height: 280, borderRadius: 8, }} source={{uri: containers.img}} />
                             <View style={{padding: 8}}>
                                 <Text style={{color: "#A5ABAB", paddingHorizontal: 8, paddingVertical: 5}}>Ауру</Text>
                                 <Text style={{fontSize: 16, paddingHorizontal: 8, paddingVertical: 5}}>{containers.name}</Text>

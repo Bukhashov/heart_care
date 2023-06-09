@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Dimensions, SafeAreaView, ScrollView, FlatList, TouchableOpacity} from "react-native";
+import { View, Text, Dimensions, Image, SafeAreaView, ScrollView, FlatList, TouchableOpacity} from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 import ActivityIndicatorComponent from '../components/activityIndicator';
 import config from '../../config/config';
@@ -123,15 +123,22 @@ const MainScreen = ({navigation}) => {
                                                     }
                                                 })
                                             }}
+                                            style={{
+                                                width: width-180,
+                                                marginHorizontal: 15,
+                                                marginVertical: 25,
+                                                display: 'flex',
+                                                flexDirection: 'row',
+                                            }}
                                         >
-                                            <View style={{
-                                                width: width-50,
-                                                paddingHorizontal: 15,
-                                                paddingVertical: 25,
-                                            }}>
-                                                <Text style={{paddingVertical: 5, fontSize: 18}}>{container.name}</Text>
-                                                <Text numberOfLines={5}>{container.problems}</Text>
-                                            </View>
+                                                <View style={{ marginHorizontal: 5, }}>
+                                                    <Image style={{ width: 140, height: 140, borderRadius: 8, }} source={{uri: container.img}} />
+                                                </View>
+                                                <View>
+                                                    <Text numberOfLines={1} style={{paddingVertical: 5, fontSize: 18}}>{container.name}</Text>
+                                                    <Text numberOfLines={5}>{container.problems}</Text>
+                                                </View>
+
                                         </TouchableOpacity>  
                                     ))
                                 }

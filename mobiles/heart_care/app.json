@@ -15,12 +15,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.berik2301.heart_care",
+      "config" : {
+        "googleMapsApiKey" : "AIzaSyCOyjsBr32s7-qwjyJ_J4zN4xWOm2OP0gs"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "config" : {
+        "googleMaps" : {
+          "apiKey" : "AIzaSyCOyjsBr32s7-qwjyJ_J4zN4xWOm2OP0gs"
+        }
       },
       "package": "com.berik2301.heart_care"
     },

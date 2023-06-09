@@ -34,6 +34,9 @@ const MapScreen = (props) => {
         setUserLocationLatitude(latitude);
         setUserLocationLongitude(longitude);
 
+        console.log(latitude)
+        console.log(longitude)
+
         
         // Center the map on the location we just fetched.
         setRegion( { latitude, longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 } );
@@ -77,16 +80,26 @@ const MapScreen = (props) => {
             {
                 isFromDiseases
                 ? (
-                    <Polyline coordinates={[
-                        {latitude: userLocationLatitude, longitude: userLocationLongitude},
-                        {latitude: props.route.params.content.latitude, longitude: props.route.params.content.longitude},
-                    ]}
-                    strokeColor="#fff"
-                    strokeColors={[
-                    '#7F0000',
-                    ]}
-                    strokeWidth={6}
-                    />
+                    <View>
+                        <Polyline coordinates={[
+                            {latitude: userLocationLatitude, longitude: userLocationLongitude},
+                            {latitude: props.route.params.content.latitude, longitude: props.route.params.content.longitude},
+                        ]}
+                            strokeColor="#fff"
+                            strokeColors={[
+                                '#7F0000',
+                            ]}
+                            strokeWidth={6}
+                        />
+                        <Marker
+                            title={""}
+                            description=""
+                            coordinate={{
+                                latitude: props.route.params.content.latitude,
+                                longitude: props.route.params.content.longitude,
+                        }}/>
+                    </View>
+                    
                 )
                 : (
                     Polyclinics.map((polyclinic) => (
